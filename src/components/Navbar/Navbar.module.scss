@@ -1,0 +1,74 @@
+.navbar_container {
+    position: fixed;
+    width: 100%;
+    background-color: white;
+    line-height: 65px;
+    box-shadow: 0 0.25rem 0.5rem 0 rgba(150,142,166,.08);
+}
+
+.navbar_item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1504px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.santa {
+    color: #333640;
+    font-family: Inter;
+    font-size: 14.625px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 15px;
+}
+
+.login_lang {}
+
+.login {
+    color: #FF6960;
+    font-family: Inter;
+    font-size: 15.125px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+
+}
+
+.stick {
+    margin: 0 16px;
+    color: #DDD;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.lang {
+    color: #FF6960;
+    font-family: Inter;
+    font-size: 15.125px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.logo_santa {
+    color: #333640;
+    font-family: Inter;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px
+}
+
+.dot {
+    color: #FF6960;
+    font-family: Inter;
+    font-size: 21.525px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px
+}
