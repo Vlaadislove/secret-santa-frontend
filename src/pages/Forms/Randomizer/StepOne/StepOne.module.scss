@@ -1,7 +1,5 @@
 .form_main {
-
     margin-top: 24px;
-
 }
 
 .form {
@@ -138,6 +136,7 @@
 
 
 .name {
+    margin-top: 3.5px;
     width: 279px;
     height: 46.38px;
     flex-shrink: 0;
@@ -145,9 +144,22 @@
     border: 1px solid #d3dde3;
     background: #FFF;
     display: block;
+    transition: 0.4s;
+    padding-left: 15px;
+
+    &:hover {
+        border: 1px solid rgb(103, 86, 140);
+        transition: border 0.4s ease;
+    }
+
+    &:focus {
+        border: 1px solid rgb(103, 86, 140);
+        box-shadow: 0 0 0 3px rgb(227, 225, 233);
+    }
 }
 
 .email {
+    margin-top: 3.5px;
     width: 279px;
     height: 46.38px;
     flex-shrink: 0;
@@ -155,6 +167,22 @@
     border: 1px solid #d3dde3;
     background: #FFF;
     display: block;
+    transition: 0.4s;
+    padding-left: 15px;
+
+    &:hover {
+        border: 1px solid rgb(103, 86, 140);
+        transition: border 0.4s ease;
+    }
+
+    &:focus {
+        border: 1px solid rgb(103, 86, 140);
+        box-shadow: 0 0 0 3px rgb(227, 225, 233);
+    }
+}
+
+.input_error {
+    border: 1px solid #ED406A;
 }
 
 .checkbox_btn {
@@ -256,8 +284,10 @@
     margin-top: 64.81px;
     height: 42.38px;
     border-radius: 8px;
-    background: #FFEFF3;
     text-align: center;
+}
+.error_back{
+    background: #FFEFF3;
 }
 
 .error_text {
@@ -280,7 +310,7 @@
 
 
     .form_footer_container {
-        padding-top:  39px;
+        padding-top: 39px;
         padding-left: 32px;
         padding-right: 32px;
         display: flex;

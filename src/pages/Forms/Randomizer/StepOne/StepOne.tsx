@@ -1,26 +1,40 @@
-import React from 'react'
-import style from './StepOne.module.scss'
-import clock from '../../../assets/clock.svg'
+import React, { useState } from 'react'
+import style from '../StepOne/StepOne.module.scss'
+import clock from '../../../../assets/clock.svg'
 import { Link } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import arrowLeft from '../../../assets/arrow left.svg'
-import arrowRight from '../../../assets/arrow right.svg'
+import { FieldValues, useForm } from 'react-hook-form'
+import arrowLeft from '../../../../assets/arrow left.svg'
+import arrowRight from '../../../../assets/arrow right.svg'
 
+interface doneStepOne {
+    doneStepOne: (data:object) => void;
+}
 
+export const StepOne: React.FC<doneStepOne> = ({doneStepOne}) => {
+    const [showElement, setShowElement] = useState<boolean[]>(Array(2).fill(true));
+    const { register, handleSubmit, formState: { errors }, trigger } = useForm({ shouldFocusError: false })
 
-export const StepOne = () => {
-    const { register, handleSubmit } = useForm()
-
-    const onSubmit = () => {
+    const styleErrorsFocus = (index: number) => {
+            const setIndex = [...showElement]
+            setIndex[index] = false
+            setShowElement(setIndex)
+    }
+    const styleErrorsBlur = (index: number) => {
+            const setIndex = [...showElement]
+            setIndex[index] = true
+            setShowElement(setIndex)
     }
 
+    const onSubmit = (data: FieldValues) => {
+        doneStepOne(data)
+    }
 
     return (
-        <div>
+        <div className={style.test}>
             <div className={style.form_main}>
 
 
-                <form onSubmit={handleSubmit((data) => console.log(data))} noValidate>
+                <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <div className={style.form}>
                         <div className={style.form_title}>
                             <div className={style.icon_item}>
@@ -39,20 +53,22 @@ export const StepOne = () => {
                             <div className={style.form_one}>
                                 <div className={style.text_input}>
                                     <span className={style.text_name}>Ваше имя</span>
-                                    <span className={style.text_email}>Обязательное поле</span>
+                                    {errors.name && showElement[0] && (<span className={style.text_email}>{errors.name.message?.toString()}</span>)}
                                 </div>
                                 <input
                                     {...register('name', {
                                         required: 'Обязательное поле'
                                     })}
-                                    className={style.name}
+                                    className={`${style.name} ${errors.name && style.input_error}`}
                                     type="text"
+                                    onFocus={() => styleErrorsFocus(0)}
+                                    onBlur={() => { styleErrorsBlur(0); trigger("name") }}
                                 />
                             </div>
                             <div className={style.form_two}>
                                 <div className={style.text_input}>
                                     <span className={style.text_name}>Ваш email</span>
-                                    <span className={style.text_email}>Обязательное поле</span>
+                                    {errors.email && showElement[1] && (<span className={style.text_email}>{errors.email.message?.toString()} </span>)}
                                 </div>
                                 <input
                                     {...register('email', {
@@ -63,8 +79,10 @@ export const StepOne = () => {
                                         }
 
                                     })}
-                                    className={style.email}
+                                    className={`${style.email} ${errors.email && style.input_error}`}
                                     type="email"
+                                    onFocus={() => styleErrorsFocus(1)}
+                                    onBlur={() => { styleErrorsBlur(1); trigger("email")  }}
                                 />
                             </div>
                         </div>
@@ -78,7 +96,6 @@ export const StepOne = () => {
                                 <label className={style.form_switch}>
                                     <input
                                         {...register('checkbox')}
-                                        // className={style.ios_toggle}
                                         type="checkbox"
                                     />
                                     <i></i>
@@ -86,17 +103,17 @@ export const StepOne = () => {
                             </div>
                         </div>
                         <div className={style.data}>Продолжая, вы даете согласие на <Link to={'#'}>обработку персональных данных.</Link></div>
-                        <div className={style.error}>
-                            <div className={style.error_text}>В форме допущены ошибки</div>
-                        </div>
+                        <div className={`${style.error} ${errors.name || errors.email ? style.error_back : null}`}>
+                                {errors.name || errors.email ? (<div className={style.error_text}>В форме допущены ошибки</div>) : null}
+                            </div>
                     </div>
                     <div className={style.form_footer}>
                         <div className={style.form_footer_container}>
-                            <Link to={'*'} className={style.arrow_left}>
+                            <Link to={'/'} className={style.arrow_left}>
                                 <img src={arrowLeft} alt="" />
                             </Link>
                             <div className={style.number_step}>Шаг 1 из 3</div>
-                            <button className={style.arrow_right}>
+                            <button className={style.arrow_right} type='submit'>
                                 <img src={arrowRight} alt="" />
                             </button>
                         </div>
