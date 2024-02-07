@@ -4,7 +4,8 @@ import { Layout } from '../Layout/Layout'
 import style from './App.module.scss'
 
 import { Routes, Route } from 'react-router-dom'
-import { Random } from '../../pages/Randomizer/Random'
+import { Randomize } from '../../pages/Randomize/Randomize'
+
 
 
 
@@ -14,7 +15,7 @@ export const App = () => {
      <Routes>
      <Route path="/" element={<MainPage />}  />
      <Route path="/login" element={<LoginPage/>}/>
-     <Route path="/randomizer" element={<Random/>}/>
+     <Route path="/randomizer" element={<Randomize/>}/>
      </Routes>
     </Layout>
   )

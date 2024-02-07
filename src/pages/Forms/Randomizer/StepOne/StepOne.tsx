@@ -2,32 +2,49 @@ import React, { useState } from 'react'
 import style from '../StepOne/StepOne.module.scss'
 import clock from '../../../../assets/clock.svg'
 import { Link } from 'react-router-dom'
-import { FieldValues, useForm } from 'react-hook-form'
+import { FieldValues, set, useForm, useWatch } from 'react-hook-form'
 import arrowLeft from '../../../../assets/arrow left.svg'
 import arrowRight from '../../../../assets/arrow right.svg'
+import debounce from 'debounce'
+import { ICreator } from '../../../Randomize/Randomize'
 
-interface doneStepOne {
-    doneStepOne: (data:object) => void;
+export type FormInputs = {
+    name: string;
+    email: string;
+    checkbox: boolean
+};
+
+interface IStepOne {
+    addStepForOne: (data: ICreator) => void;
+    creator: FormInputs
 }
 
-export const StepOne: React.FC<doneStepOne> = ({doneStepOne}) => {
+export const StepOne: React.FC<IStepOne> = ({ addStepForOne, creator:{name,checkbox,email} }) => {
+    const [showError, setShowError] = useState<boolean>(false)
     const [showElement, setShowElement] = useState<boolean[]>(Array(2).fill(true));
-    const { register, handleSubmit, formState: { errors }, trigger } = useForm({ shouldFocusError: false })
+    const { register, handleSubmit, formState: { errors }} = useForm<FormInputs>({
+        defaultValues: name == ''
+        ? {name:'', email:'', checkbox: true}
+        : {name:`${name}`, email:`${email}`, checkbox: checkbox} ,
+         shouldFocusError: false,
+          mode: 'onChange' })
 
     const styleErrorsFocus = (index: number) => {
-            const setIndex = [...showElement]
-            setIndex[index] = false
-            setShowElement(setIndex)
+        const setIndex = [...showElement]
+        setIndex[index] = false
+        setShowElement(setIndex)
     }
     const styleErrorsBlur = (index: number) => {
-            const setIndex = [...showElement]
-            setIndex[index] = true
-            setShowElement(setIndex)
+        const setIndex = [...showElement]
+        setIndex[index] = true
+        setShowElement(setIndex)
     }
 
-    const onSubmit = (data: FieldValues) => {
-        doneStepOne(data)
+
+    const onSubmit = (data: ICreator) => {
+        addStepForOne(data)
     }
+
 
     return (
         <div className={style.test}>
@@ -57,12 +74,15 @@ export const StepOne: React.FC<doneStepOne> = ({doneStepOne}) => {
                                 </div>
                                 <input
                                     {...register('name', {
-                                        required: 'Обязательное поле'
+                                        required: 'Обязательное поле',
+                                        onChange: () => {
+                                            setShowError(false)
+                                        },
                                     })}
                                     className={`${style.name} ${errors.name && style.input_error}`}
                                     type="text"
                                     onFocus={() => styleErrorsFocus(0)}
-                                    onBlur={() => { styleErrorsBlur(0); trigger("name") }}
+                                    onBlur={() => styleErrorsBlur(0)}
                                 />
                             </div>
                             <div className={style.form_two}>
@@ -76,13 +96,16 @@ export const StepOne: React.FC<doneStepOne> = ({doneStepOne}) => {
                                         pattern: {
                                             value: /.+@.+\..+/i,
                                             message: "Некорректный email"
+                                        },
+                                        onChange: () => {
+                                            setShowError(false)
                                         }
 
                                     })}
                                     className={`${style.email} ${errors.email && style.input_error}`}
                                     type="email"
                                     onFocus={() => styleErrorsFocus(1)}
-                                    onBlur={() => { styleErrorsBlur(1); trigger("email")  }}
+                                    onBlur={() => styleErrorsBlur(1)}
                                 />
                             </div>
                         </div>
@@ -103,9 +126,9 @@ export const StepOne: React.FC<doneStepOne> = ({doneStepOne}) => {
                             </div>
                         </div>
                         <div className={style.data}>Продолжая, вы даете согласие на <Link to={'#'}>обработку персональных данных.</Link></div>
-                        <div className={`${style.error} ${errors.name || errors.email ? style.error_back : null}`}>
-                                {errors.name || errors.email ? (<div className={style.error_text}>В форме допущены ошибки</div>) : null}
-                            </div>
+                        <div className={`${style.error} ${showError ? style.error_back : null}`}>
+                            {showError ? (<div className={style.error_text}>В форме допущены ошибки</div>) : null}
+                        </div>
                     </div>
                     <div className={style.form_footer}>
                         <div className={style.form_footer_container}>
@@ -113,9 +136,11 @@ export const StepOne: React.FC<doneStepOne> = ({doneStepOne}) => {
                                 <img src={arrowLeft} alt="" />
                             </Link>
                             <div className={style.number_step}>Шаг 1 из 3</div>
-                            <button className={style.arrow_right} type='submit'>
-                                <img src={arrowRight} alt="" />
-                            </button>
+                            <div onClick={() => Object.keys(errors).length == 0 ? setShowError(false) : setShowError(true)}>
+                                <button className={style.arrow_right} type='submit'>
+                                    <img src={arrowRight} alt="" />
+                                </button>
+                            </div>
                         </div>
 
                     </div>
