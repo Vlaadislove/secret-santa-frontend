@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import style from '../StepOne/StepOne.module.scss'
 import clock from '../../../../assets/clock.svg'
 import { Link } from 'react-router-dom'
-import { FieldValues, set, useForm, useWatch } from 'react-hook-form'
+import { useForm,} from 'react-hook-form'
 import arrowLeft from '../../../../assets/arrow left.svg'
 import arrowRight from '../../../../assets/arrow right.svg'
-import debounce from 'debounce'
 import { ICreator } from '../../../Randomize/Randomize'
 
 export type FormInputs = {
@@ -44,6 +43,7 @@ export const StepOne: React.FC<IStepOne> = ({ addStepForOne, creator:{name,check
     const onSubmit = (data: ICreator) => {
         addStepForOne(data)
     }
+    
 
 
     return (
@@ -103,7 +103,7 @@ export const StepOne: React.FC<IStepOne> = ({ addStepForOne, creator:{name,check
 
                                     })}
                                     className={`${style.email} ${errors.email && style.input_error}`}
-                                    type="email"
+                                    type="text"
                                     onFocus={() => styleErrorsFocus(1)}
                                     onBlur={() => styleErrorsBlur(1)}
                                 />

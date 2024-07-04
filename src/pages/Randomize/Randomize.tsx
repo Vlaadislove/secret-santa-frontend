@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import style from './Random.module.scss'
 import { StepOne } from '../Forms/Randomizer/StepOne/StepOne'
 import { StepTwo } from '../Forms/Randomizer/StepTwo/StepTwo'
@@ -36,20 +37,17 @@ export const Randomize = () => {
   const addStepForThree = () =>{
     const {checkbox, ...newCreator} = creator
     const combinedObject = {
-      creator: newCreator,
+      create: newCreator,
       party: party.party
     };
-    console.log(combinedObject)
     setStep(step+1)
+    axios.post('http://localhost:5000/api/randomize', combinedObject);
   }
 
 
   const removeStep =()=>{
     setStep(step - 1)
   }
-
-    // console.log('Creator', creator)
-    // console.log('Party', party)
 
   return (
     <div className={style.form_container}>

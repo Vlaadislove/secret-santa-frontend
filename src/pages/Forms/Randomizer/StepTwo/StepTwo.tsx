@@ -101,7 +101,8 @@ export const StepTwo: React.FC<IStepTwo> = ({ creator, removeStep, addStepForTwo
                                         {errors.party?.[index]?.email && (<span className={style.text_email}>{errors.party?.[index]?.email?.message}</span>)}
                                     </div>
                                     <input
-                                        {...register(`party.${index}.email`, {
+                                        {...register(`party.${index}.email`, 
+                                        {
                                             required: 'Обязательное поле',
                                             pattern: {
                                                 value: /.+@.+\..+/i,
@@ -109,9 +110,9 @@ export const StepTwo: React.FC<IStepTwo> = ({ creator, removeStep, addStepForTwo
                                             },
                                             onBlur: () => trigger(checkErrors()),
                                             validate: (value) => validationEmail(value) || 'Не уникальный Email'
-                                        })} // { ,}
+                                        })} 
                                         className={`${style.email} ${errors.party?.[index]?.email && style.input_error} ${creator.checkbox && index == 0 ? style.not_allowed : null}`}
-                                        type="email"
+                                        type="text"
                                         onFocus={() => clearErrors(`party.${index}.email`)}
                                         readOnly={creator.checkbox && index == 0 ? true : false}
                                     />
@@ -133,7 +134,7 @@ export const StepTwo: React.FC<IStepTwo> = ({ creator, removeStep, addStepForTwo
                             <img src={arrowLeft} alt="" />
                         </div>
                         <div className={style.number_step}>Шаг 2 из 3</div>
-                        <button className={style.arrow_right}>
+                        <button type='submit' className={style.arrow_right}>
                             <img src={arrowRight} alt="" />
                         </button>
                     </div>

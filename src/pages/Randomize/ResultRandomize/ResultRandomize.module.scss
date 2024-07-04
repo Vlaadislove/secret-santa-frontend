@@ -1,0 +1,122 @@
+.randomize {
+    padding-top: 63px;
+    max-width: 860px;
+    margin: 0 auto;
+}
+
+.header_title {
+    text-align: center;
+    margin-top: 40px;
+    color: #333640;
+    font-family: Inter;
+    font-size: 21.383px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 32px;
+
+}
+
+
+.info {
+    margin: 30px auto 0 auto;
+    border-radius: 16px;
+    background-color: #f1ecfe;
+    max-width: 480px;
+    height: 95px;
+    display: flex;
+    align-items: center;
+}
+
+.info_icon {
+    margin-left: 25px;
+
+}
+
+
+.info_text {
+
+    width: 375px;
+    margin-left: 20px;
+}
+
+.text {
+    color: #67568C;
+    font-family: Inter;
+    font-size: 12.594px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 18px;
+}
+
+.arrow {}
+
+.party {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.gifter {
+    box-shadow: 0px 6px 16px 0px rgba(86, 86, 131, 0.16);
+    border: 1px solid #f1ecfe;
+    border-radius: 32px;
+    width: 350px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gifter_name {
+    color: #505153;
+    font-family: Inter;
+    font-size: 21.383px;
+    font-style: normal;
+    font-weight: 00;
+    line-height: 22px;
+}
+
+.recipient {
+    box-shadow: 0px 6px 16px 0px rgba(86, 86, 131, 0.16);
+    border: 1px solid #f1ecfe;
+    border-radius: 32px;
+    width: 350px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recipient_name {
+    margin-left: 30px;
+    page-break-inside: 30px;
+    color: #505153;
+    font-family: Inter;
+    font-size: 21.383px;
+    font-style: normal;
+    font-weight: 00;
+    line-height: 22px;
+}
+.steals{
+    margin-left: 30px;
+    page-break-inside: 30px;
+    color: #FF8C98;
+    font-family: Inter;
+    font-size: 21.383px;
+    font-style: normal;
+    font-weight: 00;
+    line-height: 22px;
+}
+.view {
+    z-index: 10;
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+}

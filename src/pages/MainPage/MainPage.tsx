@@ -17,7 +17,7 @@ export const MainPage = () => {
           <Link to={'/box/new'} className={style.main_box}>
             <span  className={style.btn_main}>Создать коробку</span>
           </Link>
-          <Link to={'/randomizer'} className={style.randomizer_box}>
+          <Link to={'/randomize'} className={style.randomizer_box}>
             <span  className={style.btn_randomizer}>Быстрая жеребьевка</span>
           </Link>
         </div>
