@@ -28,16 +28,16 @@ export const StepOne: React.FC<IStepOne> = ({ addStepForOne, creator:{name,check
          shouldFocusError: false,
           mode: 'onChange' })
 
-    const styleErrorsFocus = (index: number) => {
+    const styleErrors = (index: number) => {
         const setIndex = [...showElement]
-        setIndex[index] = false
+        setIndex[index] = !setIndex[index]
         setShowElement(setIndex)
     }
-    const styleErrorsBlur = (index: number) => {
-        const setIndex = [...showElement]
-        setIndex[index] = true
-        setShowElement(setIndex)
-    }
+    // const styleErrorsBlur = (index: number) => {
+    //     const setIndex = [...showElement]
+    //     setIndex[index] = true
+    //     setShowElement(setIndex)
+    // }
 
 
     const onSubmit = (data: ICreator) => {
@@ -81,8 +81,8 @@ export const StepOne: React.FC<IStepOne> = ({ addStepForOne, creator:{name,check
                                     })}
                                     className={`${style.name} ${errors.name && style.input_error}`}
                                     type="text"
-                                    onFocus={() => styleErrorsFocus(0)}
-                                    onBlur={() => styleErrorsBlur(0)}
+                                    onFocus={() => styleErrors(0)}
+                                    onBlur={() => styleErrors(0)}
                                 />
                             </div>
                             <div className={style.form_two}>
@@ -104,8 +104,8 @@ export const StepOne: React.FC<IStepOne> = ({ addStepForOne, creator:{name,check
                                     })}
                                     className={`${style.email} ${errors.email && style.input_error}`}
                                     type="text"
-                                    onFocus={() => styleErrorsFocus(1)}
-                                    onBlur={() => styleErrorsBlur(1)}
+                                    onFocus={() => styleErrors(1)}
+                                    onBlur={() => styleErrors(1)}
                                 />
                             </div>
                         </div>

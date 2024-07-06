@@ -19,7 +19,6 @@
     width: 40px;
     margin-left: 24px;
     margin-top: 21px;
-
 }
 
 .text_item {
@@ -194,6 +193,7 @@
     display: inline-block;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
 .form_switch i {
@@ -286,7 +286,8 @@
     border-radius: 8px;
     text-align: center;
 }
-.error_back{
+
+.error_back {
     background: #FFEFF3;
 }
 
