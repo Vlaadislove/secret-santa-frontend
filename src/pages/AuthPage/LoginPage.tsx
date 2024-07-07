@@ -9,7 +9,7 @@ interface FormLogin {
   password: string
 }
 
-const foo = true
+const foo = false
 
 
 export const LoginPage = () => {
@@ -29,13 +29,13 @@ export const LoginPage = () => {
   const onSubmit = (data: FormLogin) => {
     // addStepForOne(data)
   }
- 
+
 
   return (
     <>
       <div className={style.auth_container}>
         <span className={style.name_page}>Вход на сайт</span>
-        <span className={style.link_register}>Еще нет аккаунта? <Link to={'/*#'}>Зарегистрироваться</Link></span>
+        <span className={style.link_register}>Еще нет аккаунта? <Link to={'/register'}>Зарегистрироваться</Link></span>
         <form onSubmit={handleSubmit(onSubmit)} className={style.form_auth}>
           <div className={style.email_item}>
             <div className={style.form_input_name}>
@@ -77,6 +77,8 @@ export const LoginPage = () => {
                 ? <Eye size={34} color="#887c7f" strokeWidth={1.75} />
                 : <EyeOff size={34} color="#887c7f" strokeWidth={1.75} />}
             </div>
+          </div>
+          <div className={style.wrapper_forgot_password}>
             <Link to={'/*'} className={style.forgot_password}>Забыли пароль?</Link>
           </div>
           <div className={`${style.error_server} ${foo && style.error_true}`}>{foo && 'Неверное имя пользователя или пароль'}</div>

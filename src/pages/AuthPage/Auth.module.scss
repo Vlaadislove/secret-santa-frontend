@@ -102,7 +102,7 @@
 }
 
 .email_item {
-    // margin-top: 21px;
+    margin-top: 21px;
 }
 
 .password_item {
@@ -120,10 +120,12 @@
     line-height: 18px;
 }
 
-.forgot_password {
+.wrapper_forgot_password{
+    width: 480px;
     display: flex;
-    flex-direction: column;
-    align-items: end;
+    justify-content: end;
+}
+.forgot_password {
     margin-top: 5px;
     color: #3b4352;
     font-family: Inter;
@@ -160,8 +162,8 @@
 }
 
 .error_server {
-    margin-top: 10px;
-    margin-bottom: 15px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 480px;
     height: 42.38px;
     border-radius: 8px;
@@ -186,7 +188,7 @@
     cursor: pointer;
     position: absolute;
     right: 15px;
-    bottom: 25px;
+    bottom: 3px;
 }
 
 .form_input_name {

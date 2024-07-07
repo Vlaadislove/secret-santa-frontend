@@ -6,6 +6,7 @@ import style from './App.module.scss'
 import { Routes, Route } from 'react-router-dom'
 import { Randomize } from '../../pages/Randomize/Randomize'
 import { ResultRandomize } from '../../pages/Randomize/ResultRandomize/ResultRandomize'
+import { RegisterPage } from '../../pages/AuthPage/RegisterPage'
 
 
 
@@ -16,6 +17,7 @@ export const App = () => {
      <Routes>
      <Route path="/" element={<MainPage />}  />
      <Route path="/login" element={<LoginPage/>}/>
+     <Route path="/register" element={<RegisterPage/>}/>
      <Route path="/randomize" element={<Randomize/>}/>
      <Route path="/randomize/:id" element={<ResultRandomize/>}/>
      </Routes>
