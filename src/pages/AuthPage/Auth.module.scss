@@ -50,6 +50,30 @@
     margin-top: 30px;
 }
 
+.username {
+    margin-top: 3.5px;
+    width: 480px;
+    height: 46.38px;
+    flex-shrink: 0;
+    border-radius: 9.6px;
+    border: 1px solid #d3dde3;
+    background: #FFF;
+    display: block;
+    transition: 0.4s;
+    padding-left: 15px;
+    font-size: 20px;
+
+    &:hover {
+        border: 1px solid rgb(103, 86, 140);
+        transition: border 0.4s ease;
+    }
+
+    &:focus {
+        border: 1px solid rgb(103, 86, 140);
+        box-shadow: 0 0 0 3px rgb(227, 225, 233);
+    }
+}
+
 .email {
     margin-top: 3.5px;
     width: 480px;
@@ -73,6 +97,7 @@
         box-shadow: 0 0 0 3px rgb(227, 225, 233);
     }
 }
+
 .password {
     margin-top: 3.5px;
     width: 480px;
@@ -120,11 +145,12 @@
     line-height: 18px;
 }
 
-.wrapper_forgot_password{
+.wrapper_forgot_password {
     width: 480px;
     display: flex;
     justify-content: end;
 }
+
 .forgot_password {
     margin-top: 5px;
     color: #3b4352;
@@ -196,7 +222,7 @@
     justify-content: space-between;
 }
 
-.text_errors_name{
+.text_errors_name {
     color: #ED406A;
     font-family: Inter;
     font-size: 12.695px;

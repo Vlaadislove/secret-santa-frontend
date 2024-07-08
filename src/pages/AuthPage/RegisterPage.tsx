@@ -4,19 +4,20 @@ import { FieldValues, useFieldArray, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import { Info, Eye, EyeOff } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '../../store/store';
+import { registerUser } from '../../store/Auth/authSlice';
 
 export interface FormRegister {
   username: string
   email: string
   password: string
-
+  serverError: string
 }
 
-const foo = false
 
 
 export const RegisterPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormRegister>({
+  const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormRegister>({
     shouldFocusError: false,
     mode: 'onChange'
   })
@@ -25,7 +26,7 @@ export const RegisterPage = () => {
   // const {status} = useSelector(state => state.auth)
 
   const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
 
   const styleErrors = (index: number) => {
     const setIndex = [...showElement]
@@ -33,11 +34,13 @@ export const RegisterPage = () => {
     setShowElement(setIndex)
   }
 
-  const onSubmit = (data: FormRegister) => {
-    dispatch(data)
+  const onSubmit = async (data: FormRegister) => {
+    const resultAction = await dispatch(registerUser(data))
+    if (registerUser.rejected.match(resultAction)) {
+      console.log(resultAction.payload?.errorMessage)
+      setError('serverError', { type: 'server', message: resultAction.payload?.errorMessage })
+    }
   }
- 
-
   return (
     <>
       <div className={style.auth_container}>
@@ -53,7 +56,7 @@ export const RegisterPage = () => {
               {...register('username', {
                 required: 'Обязательное поле'
               })}
-              className={`${style.email} ${errors.email && style.input_error}`}
+              className={`${style.username} ${errors.username && style.input_error}`}
               type="text"
               onFocus={() => styleErrors(0)}
               onBlur={() => styleErrors(0)}
@@ -100,7 +103,8 @@ export const RegisterPage = () => {
                 : <EyeOff size={34} color="#887c7f" strokeWidth={1.75} />}
             </div>
           </div>
-          <div className={`${style.error_server} ${foo && style.error_true}`}>{foo && 'Неверное имя пользователя или пароль'}</div>
+          {/* TODO:сделать плавное пояление serverError и добавить туда ссылку 'войти' */}
+          <div className={`${style.error_server} ${errors.serverError && style.error_true}`}>{errors.serverError?.message}</div>
           <button type='submit' className={style.btn_auth}>
             Зарегистрироваться
           </button>
