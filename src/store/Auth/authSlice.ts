@@ -3,12 +3,15 @@ import { instance } from '../../utils/axios'
 import { FormRegister } from '../../pages/AuthPage/RegisterPage';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-interface RegisterUserResponse {
+interface AuthUserResponse {
+    username: string,
+    email: string,
+    id: string,
     deviceId: string;
 }
 
-interface RegisterUserPayload {
-    username: string;
+interface AuthUserPayload {
+    username?: string;
     email: string;
     password: string;
 }
@@ -17,25 +20,27 @@ interface ValidationErrors {
 }
 
 interface authState {
-    user: null,
-    email: null,
+    username: string | null,
+    email: string | null,
+    userId: string | null,
     isLoading: boolean,
     error: string | null
+    isAuth: boolean
 }
 
 
-export const registerUser = createAsyncThunk<RegisterUserResponse, RegisterUserPayload, { rejectValue: ValidationErrors }>('auth/registerUser',
-    async (dateClient: RegisterUserPayload, { rejectWithValue }) => {
+export const registerUser = createAsyncThunk<AuthUserResponse, AuthUserPayload, { rejectValue: ValidationErrors }>('auth/registerUser',
+    async (dateClient: AuthUserPayload, { rejectWithValue }) => {
         try {
             const { username, email, password } = dateClient
-            const {data} = await instance.post<RegisterUserResponse>('/auth/register',{
+            const { data } = await instance.post<AuthUserResponse>('/auth/register', {
                 username,
                 email,
                 password
-            },{
-                withCredentials:true
+            }, {
+                withCredentials: true
             })
-            console.log(data)
+            localStorage.setItem('deviceId', JSON.stringify(data.deviceId));
             return data
         }
         catch (err) {
@@ -49,19 +54,21 @@ export const registerUser = createAsyncThunk<RegisterUserResponse, RegisterUserP
         }
     }
 )
-export const registUser = createAsyncThunk<RegisterUserResponse, RegisterUserPayload, { rejectValue: ValidationErrors }>('auth/registerUser',
-    async (dateClient: RegisterUserPayload, { rejectWithValue }) => {
+export const loginUser = createAsyncThunk<AuthUserResponse, AuthUserPayload, { rejectValue: ValidationErrors }>('auth/loginUser',
+    async (dateClient: AuthUserPayload, { rejectWithValue }) => {
         try {
-            const { username, email, password } = dateClient
-            const {data} = await instance.post<RegisterUserResponse>('/auth/register',{
-                username,
+            const { email, password } = dateClient
+            const deviceIdWithStorage = localStorage.getItem('deviceId');
+            const { data } = await instance.post<AuthUserResponse>(`/auth/login`, {
                 email,
                 password
-            },{
-                withCredentials:true
+            }, {
+                withCredentials: true,
+                params: {
+                    deviceIdWithStorage
+                }
             })
-            // TODO: сохранить девайс в local storage
-            console.log(data)
+            localStorage.setItem('deviceId', JSON.stringify(data.deviceId));
             return data
         }
         catch (err) {
@@ -69,7 +76,6 @@ export const registUser = createAsyncThunk<RegisterUserResponse, RegisterUserPay
                 throw err;
             }
             let error: AxiosError<ValidationErrors> = err
-            console.log(error.response)
             if (error.response && error.response.status === 409) return rejectWithValue(error.response.data)
             else throw error
         }
@@ -78,10 +84,12 @@ export const registUser = createAsyncThunk<RegisterUserResponse, RegisterUserPay
 
 
 const initialState: authState = {
-    user: null,
+    username: null,
+    userId: null,
     email: null,
     isLoading: false,
-    error: null
+    error: null,
+    isAuth: false
 }
 
 export const authSlice = createSlice({
@@ -90,10 +98,18 @@ export const authSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(registerUser.rejected, (state, action) => {
-                if(action.payload?.errorMessage){
-                    state.error = action.payload.errorMessage
-                }
+            //Регистрация
+            .addCase(registerUser.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(registerUser.fulfilled, (state, action) => {
+                state.email = action.payload.email
+                state.userId = action.payload.id
+                state.username = action.payload.username
+                state.isLoading = false
+                state.isAuth = true
+            })
+            .addCase(registerUser.rejected, (state) => {
                 state.isLoading = false
             })
     }

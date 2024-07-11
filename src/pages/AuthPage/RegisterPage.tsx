@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './Auth.module.scss'
 import { FieldValues, useFieldArray, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,6 +6,9 @@ import { Info, Eye, EyeOff } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../store/store';
 import { registerUser } from '../../store/Auth/authSlice';
+import { Preloader } from '../Preloader/Preloader';
+import { RootState } from '../../store/store';
+import { useLoadingDelay } from '../../hooks/useLoadingDelay';
 
 export interface FormRegister {
   username: string
@@ -23,22 +26,28 @@ export const RegisterPage = () => {
   })
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showElement, setShowElement] = useState<boolean[]>(Array(3).fill(true));
-  // const {status} = useSelector(state => state.auth)
+
+  const isLoading = useSelector((state: RootState) => state.auth.isLoading)
+
+  const showPreloader = useLoadingDelay(isLoading, 1000);
 
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
 
   const styleErrors = (index: number) => {
     const setIndex = [...showElement]
+    if (index === 1) clearErrors('serverError')
     setIndex[index] = !setIndex[index]
     setShowElement(setIndex)
   }
 
+
   const onSubmit = async (data: FormRegister) => {
     const resultAction = await dispatch(registerUser(data))
     if (registerUser.rejected.match(resultAction)) {
-      console.log(resultAction.payload?.errorMessage)
       setError('serverError', { type: 'server', message: resultAction.payload?.errorMessage })
+    } else {
+      navigate('/')
     }
   }
   return (
@@ -108,6 +117,7 @@ export const RegisterPage = () => {
           <button type='submit' className={style.btn_auth}>
             Зарегистрироваться
           </button>
+          {showPreloader && <Preloader />}
         </form>
       </div>
     </>

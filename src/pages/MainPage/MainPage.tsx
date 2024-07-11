@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 
 
 export const MainPage = () => {
+
   return (
     <div >
       <div className={style.img_animals}>
