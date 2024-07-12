@@ -1,33 +1,54 @@
 import React, { useState } from 'react'
 import style from './Auth.module.scss'
 import { FieldValues, useFieldArray, useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Info, Eye, EyeOff } from 'lucide-react';
+import { useLoadingDelay } from '../../hooks/useLoadingDelay';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store/store';
+import { loginUser } from '../../store/Auth/authSlice';
+import { Preloader } from '../Preloader/Preloader';
 
 interface FormLogin {
   email: string
   password: string
+  serverError: string
 }
 
 const foo = false
 
 
 export const LoginPage = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormLogin>({
+  const { register, handleSubmit, setError, clearErrors, formState: { errors } } = useForm<FormLogin>({
     shouldFocusError: false,
     mode: 'onChange'
   })
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showElement, setShowElement] = useState<boolean[]>(Array(2).fill(true));
 
+  const isLoading = useSelector((state: RootState) => state.auth.isLoading)
+  const showPreloader = useLoadingDelay(isLoading, 1000);
+
+  const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>()
+
+
   const styleErrors = (index: number) => {
     const setIndex = [...showElement]
     setIndex[index] = !setIndex[index]
     setShowElement(setIndex)
+    clearErrors('serverError')
   }
 
-  const onSubmit = (data: FormLogin) => {
-    // addStepForOne(data)
+  const onSubmit = async (data: FormLogin) => {
+    const resultAction = await dispatch(loginUser(data))
+    if (loginUser.rejected.match(resultAction)) {
+      console.log(resultAction.payload?.error)
+        setError('serverError', { type: 'server', message: resultAction.payload?.error })
+
+    } else {
+      navigate('/')
+    }
   }
 
 
@@ -64,8 +85,6 @@ export const LoginPage = () => {
             <input
               {...register('password', {
                 required: 'Обязательное поле',
-                // minLength: { value: 5, message: 'Минимальная длина - 5 символов' },
-                // maxLength: { value: 25, message: 'Минимальная длина - 25 символов' },
               })}
               className={`${style.password} ${errors.password && style.input_error}`}
               type={showPassword ? "text" : "password"}
@@ -81,10 +100,11 @@ export const LoginPage = () => {
           <div className={style.wrapper_forgot_password}>
             <Link to={'/*'} className={style.forgot_password}>Забыли пароль?</Link>
           </div>
-          <div className={`${style.error_server} ${foo && style.error_true}`}>{foo && 'Неверное имя пользователя или пароль'}</div>
+          <div className={`${style.error_server} ${errors.serverError && style.error_true}`}>{errors.serverError?.message}</div>
           <button type='submit' className={style.btn_auth}>
             Войти
           </button>
+          {showPreloader && <Preloader />}
         </form>
       </div>
     </>

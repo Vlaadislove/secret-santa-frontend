@@ -3,7 +3,7 @@
     width: 100%;
     background-color: white;
     line-height: 65px;
-    box-shadow: 0 0.25rem 0.5rem 0 rgba(150,142,166,.08);
+    box-shadow: 0 0.25rem 0.5rem 0 rgba(150, 142, 166, .08);
     caret-color: transparent;
 }
 
@@ -25,9 +25,59 @@
     line-height: 15px;
 }
 
-.login_lang {
-    
+.login_lang {}
+
+.main_itim {
+    display: flex;
+    line-height: 1;
 }
+
+.test {
+    width: 300px;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.account_item {
+    display: flex;
+    align-items: center;
+    color: #333640;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+
+    &:hover {
+        color: #FF6960;
+    }
+
+    .account {
+        margin-right: 12px;
+    }
+}
+
+
+.boxes_item {
+    display: flex;
+    align-items: center;
+    color: #333640;
+    text-align: center;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+
+    &:hover {
+        color: #FF6960;
+    }
+
+    .boxes {
+        margin-left: 12px;
+    }
+}
+
+
 
 .login {
     color: #FF6960;
@@ -36,7 +86,6 @@
     font-style: normal;
     font-weight: 500;
     line-height: 22px;
-
 }
 
 .stick {

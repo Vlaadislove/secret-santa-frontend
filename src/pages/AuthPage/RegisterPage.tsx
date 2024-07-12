@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import style from './Auth.module.scss'
 import { FieldValues, useFieldArray, useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import { Info, Eye, EyeOff } from 'lucide-react';
+import {Eye, EyeOff } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '../../store/store';
 import { registerUser } from '../../store/Auth/authSlice';
@@ -45,7 +45,7 @@ export const RegisterPage = () => {
   const onSubmit = async (data: FormRegister) => {
     const resultAction = await dispatch(registerUser(data))
     if (registerUser.rejected.match(resultAction)) {
-      setError('serverError', { type: 'server', message: resultAction.payload?.errorMessage })
+      setError('serverError', { type: 'server', message: resultAction.payload?.error })
     } else {
       navigate('/')
     }
