@@ -4,8 +4,6 @@ import style from './Layout.module.scss'
 
 // @ts-ignore
 export const Layout = ({children}) => {
-
- 
   return (
     <>
     <Navbar/>

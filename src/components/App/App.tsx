@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { getMe } from '../../store/Auth/authSlice'
 import { AppDispatch } from '../../store/store'
+import { Account } from '../../pages/Account/Account'
 
 
 
@@ -29,6 +30,7 @@ export const App = () => {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/account" element={<Account />} />
         <Route path="/randomize" element={<Randomize />} />
         <Route path="/randomize/:id" element={<ResultRandomize />} />
       </Routes>

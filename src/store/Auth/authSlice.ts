@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { instance } from '../../utils/axios'
 import axios, { AxiosError } from 'axios';
 
@@ -83,6 +83,24 @@ export const loginUser = createAsyncThunk<AuthUserResponse, AuthUserPayload, { r
         }
     }
 )
+export const logoutUser = createAsyncThunk('auth/logoutUser',
+    async () => {
+        try {
+            const deviceIdFromStorage = localStorage.getItem('deviceId');
+
+            await instance.post<AuthUserResponse>(`/auth/logout`, null, {
+                withCredentials: true,
+                params: {
+                    deviceId: deviceIdFromStorage
+                }
+            })
+            localStorage.removeItem('deviceId');
+        }
+        catch (err) {
+            console.log(err)
+        }
+    }
+)
 
 export const getMe = createAsyncThunk<AuthUserResponse, void, { rejectValue: ValidationErrors }>('auth/getMe',
     async (_, { rejectWithValue }) => {
@@ -163,6 +181,15 @@ export const authSlice = createSlice({
                     state.error = action.payload.error
                 }
                 state.isLoading = false
+            })
+
+        builder
+            //Логаут
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.email = null
+                state.userId = null
+                state.username = null
+                state.isAuth = false
             })
 
         builder

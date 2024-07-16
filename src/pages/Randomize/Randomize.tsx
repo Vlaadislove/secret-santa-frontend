@@ -41,7 +41,7 @@ export const Randomize = () => {
       party: party.party
     };
     setStep(step+1)
-    axios.post('http://localhost:5000/api/randomize', combinedObject);
+    axios.post('http://localhost:5500/api/randomize', combinedObject);
   }
 
 
