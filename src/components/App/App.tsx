@@ -12,30 +12,32 @@ import { useDispatch } from 'react-redux'
 import { getMe } from '../../store/Auth/authSlice'
 import { AppDispatch } from '../../store/store'
 import { Account } from '../../pages/Account/Account'
+import { NewBox } from '../../pages/Box/NewBox/NewBox'
 
 
 
 
 export const App = () => {
-  const dispatch = useDispatch<AppDispatch>()
+	const dispatch = useDispatch<AppDispatch>()
 
-  useEffect(() => {
-    dispatch(getMe())
-  }, [])
+	useEffect(() => {
+		dispatch(getMe())
+	}, [])
 
 
-  return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/randomize" element={<Randomize />} />
-        <Route path="/randomize/:id" element={<ResultRandomize />} />
-      </Routes>
-    </Layout>
-  )
+	return (
+		<Layout>
+			<Routes>
+				<Route path="/" element={<MainPage />} />
+				<Route path="/login" element={<LoginPage />} />
+				<Route path="/register" element={<RegisterPage />} />
+				<Route path="/account" element={<Account />} />
+				<Route path="/randomize" element={<Randomize />} />
+				<Route path="/randomize/:id" element={<ResultRandomize />} />
+				<Route path="/box/new" element={<NewBox />} />
+			</Routes>
+		</Layout>
+	)
 }
 
 

@@ -1,10 +1,10 @@
 import React from 'react'
 import style from './StepThree.module.scss'
-import arrowLeft from '../../../../assets/arrow left.svg'
-import arrowRight from '../../../../assets/arrow right.svg'
+import arrowLeft from '../../../assets/arrow left.svg'
+import arrowRight from '../../../assets/arrow right.svg'
 import { Info } from 'lucide-react';
 import { FormInputs } from '../StepOne/StepOne';
-import { IParty } from '../../../Randomize/Randomize'
+import { IParty } from '../Randomize'
 
 
 interface IStepThree {

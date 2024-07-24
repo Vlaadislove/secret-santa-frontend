@@ -2,6 +2,7 @@ import React from 'react'
 import style from './MainPage.module.scss'
 import animals from '../../assets/full.svg'
 import { Link } from 'react-router-dom'
+import { NewBox } from '../Box/NewBox/NewBox'
 
 
 export const MainPage = () => {

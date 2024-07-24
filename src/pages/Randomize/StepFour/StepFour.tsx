@@ -1,5 +1,4 @@
-import React from 'react'
-import StepFourAnimals from '../../../../assets/StepFourAnimals.png'
+import StepFourAnimals from '../../../assets/StepFourAnimals.png'
 import style from './StepFour.module.scss'
 import { Link } from 'react-router-dom'
 
