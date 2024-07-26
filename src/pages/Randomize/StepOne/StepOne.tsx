@@ -137,7 +137,6 @@ export const StepOne: React.FC<IStepOne> = ({ addStepForOne, creator: { name, ch
 								</button>
 							</div>
 						</div>
-
 					</div>
 				</form>
 

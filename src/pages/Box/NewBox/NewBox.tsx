@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './NewBox.module.scss'
 import { StepOneBox } from './StepOne/StepOneBox'
-
+import { StepTwoBox } from './StepTwo/StepTwoBox'
 
 export const NewBox = () => {
+	const [step, setStep] = useState<number>(1)
+
+
 	return (
 		<div >
 			<div className={style.container}>
-				<StepOneBox />
+				<div className={style.form_header}>
+					{step === 1 && <p>Придумайте название коробке</p>}
+					{step === 2 && <p>Выберите обложку</p>}
+					{step === 3 && <p>Стоимость подарков</p>}
+					{step === 4 && <p>Дополнительные настройки</p>}
+				</div>
+				<div className={style.form_body}>
+					<StepOneBox />
+					{/* <StepTwoBox /> */}
+				</div>
 			</div>
-		</div>
+		</div >
 	)
 }
