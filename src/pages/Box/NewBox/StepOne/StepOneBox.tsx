@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 export const StepOneBox = () => {
 	const [showError, setShowError] = useState<boolean>(true)
-	const { register, handleSubmit, clearErrors, formState: { errors } } = useForm({ shouldFocusError: false, })
+	const { register, handleSubmit, formState: { errors } } = useForm({ shouldFocusError: false, })
 
 	const onSubmit = (data: any) => {
 		console.log(data)

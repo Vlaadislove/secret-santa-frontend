@@ -4,7 +4,7 @@ import { StepOneBox } from './StepOne/StepOneBox'
 import { StepTwoBox } from './StepTwo/StepTwoBox'
 
 export const NewBox = () => {
-	const [step, setStep] = useState<number>(1)
+	const [step, setStep] = useState<number>(2)
 
 
 	return (
@@ -17,8 +17,8 @@ export const NewBox = () => {
 					{step === 4 && <p>Дополнительные настройки</p>}
 				</div>
 				<div className={style.form_body}>
-					<StepOneBox />
-					{/* <StepTwoBox /> */}
+					{step === 1 && <StepOneBox />}
+					{step === 2 && <StepTwoBox />}
 				</div>
 			</div>
 		</div >
