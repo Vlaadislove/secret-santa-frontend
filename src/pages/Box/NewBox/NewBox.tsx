@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import style from './NewBox.module.scss'
 import { StepOneBox } from './StepOne/StepOneBox'
 import { StepTwoBox } from './StepTwo/StepTwoBox'
+import { StepThreeBox } from './StepThree/StepThreeBox'
 
 export const NewBox = () => {
-	const [step, setStep] = useState<number>(2)
+	const [step, setStep] = useState<number>(3)
 
 
 	return (
@@ -19,6 +20,7 @@ export const NewBox = () => {
 				<div className={style.form_body}>
 					{step === 1 && <StepOneBox />}
 					{step === 2 && <StepTwoBox />}
+					{step === 3 && <StepThreeBox />}
 				</div>
 			</div>
 		</div >
