@@ -3,19 +3,27 @@ import style from './StepThreeBox.module.scss'
 import { useForm } from 'react-hook-form'
 import arrowLeft from '../../../../assets/arrow left.svg'
 import arrowRight from '../../../../assets/arrow right.svg'
+import { ICreateBox } from '../NewBox'
 
 
 const foo = true
 
-export const StepThreeBox = () => {
+interface IStepOne {
+	box: ICreateBox
+	setBox: (value: ICreateBox | ((prevBox: ICreateBox) => ICreateBox)) => void;
+}
+export const StepThreeBox: React.FC<IStepOne> = ({ box, setBox }) => {
+	const [showError, setShowError] = useState<boolean[]>([false, false])
+	const [selectedOption, setSelectedOption] = useState<string>(box.cashLimitCurrency);
+	const [showCheckbox, setShowCheckbox] = useState<boolean>(box.useCashLimit)
+
 	const { register, handleSubmit, trigger, watch, formState: { errors } } = useForm(
 		{
-			defaultValues: { checkbox: false, cashLimitMin: '', cashLimitMax: '' },
+			defaultValues: { checkbox: showCheckbox, cashLimitMin: box.cashLimitMin, cashLimitMax: box.cashLimitMax },
 			shouldFocusError: false,
 			mode: 'onChange'
 		})
-	const [showError, setShowError] = useState<boolean[]>([false, false])
-	const [selectedOption, setSelectedOption] = useState("");
+
 
 	const styleErrors = (index: number) => {
 		const setIndex = [...showError]
@@ -24,13 +32,31 @@ export const StepThreeBox = () => {
 	}
 
 	const onSubmit = (data: any) => {
-		console.log(data)
+		if (data.checkbox) {
+			setBox((prevBox) => ({
+				...prevBox,
+				cashLimitCurrency: selectedOption,
+				useCashLimit: data.checkbox,
+				cashLimitMin: Number(data.cashLimitMin),
+				cashLimitMax: Number(data.cashLimitMax),
+				step: prevBox.step + 1
+			}))
+		} else {
+			setBox((prevBox) => ({
+				...prevBox,
+				cashLimitCurrency: 'Рубль',
+				useCashLimit: false,
+				cashLimitMin: null,
+				cashLimitMax: null,
+				step: prevBox.step + 1
+			}))
+		}
 	}
 
 
 	return (
 		<div className={style.container}>
-			<form onSubmit={handleSubmit((data: any) => console.log(data))} className={style.form} noValidate>
+			<form onSubmit={handleSubmit(onSubmit)} className={style.form} noValidate>
 				<div className={style.checkbox}>
 					<div className={style.checkbox_rules}>
 						<div className={style.checkbox_title}>Ограничить стоимость подарков</div>
@@ -42,12 +68,13 @@ export const StepThreeBox = () => {
 							<input
 								{...register('checkbox')}
 								type="checkbox"
+								onClick={() => setShowCheckbox(!showCheckbox)}
 							/>
 							<i></i>
 						</label>
 					</div>
 				</div>
-				{foo && <div className={style.body}>
+				{showCheckbox && <div className={style.body}>
 					<div className={style.input_one}>
 						<div className={style.text_input}>
 							<span className={style.text_name}>От</span>
@@ -108,17 +135,17 @@ export const StepThreeBox = () => {
 						</select>
 					</div>
 				</div>}
-				<div className={`${style.error} ${errors.cashLimitMin?.type === 'validate' ? style.error_back : null}`}>
-					{errors.cashLimitMin?.type === 'validate'
+				<div className={`${style.error} ${errors.cashLimitMin?.type === 'validate' && showCheckbox ? style.error_back : null}`}>
+					{errors.cashLimitMin?.type === 'validate' && showCheckbox
 						? (<div className={style.error_text}>{errors.cashLimitMax?.message?.toString() || errors.cashLimitMin?.message?.toString()}</div>)
 						: null}
 				</div>
 				<div className={style.form_footer}>
 					<div className={style.form_footer_container}>
-						<button className={style.arrow_left}>
+						<button type='button' onClick={() => setBox((prevBox) => ({ ...prevBox, step: prevBox.step - 1 }))} className={style.arrow_left} >
 							<img src={arrowLeft} alt="arrowLeft" />
 						</button>
-						<div className={style.number_step}>{`Шаг ${1} из 5`}</div>
+						<div className={style.number_step}>{`Шаг ${box.step} из 5`}</div>
 						<button type='submit' className={style.arrow_right}>
 							<img src={arrowRight} alt="arrowRight" />
 						</button>
