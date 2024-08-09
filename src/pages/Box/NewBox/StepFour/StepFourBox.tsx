@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form'
 import arrowLeft from '../../../../assets/arrow left.svg'
 import arrowRight from '../../../../assets/arrow right.svg'
 import { ICreateBox } from '../NewBox'
+import { useDispatch } from 'react-redux'
+import { createBox } from '../../../../store/Boxes/boxesSlise'
+import { AppDispatch } from '../../../../store/store'
 
 interface IStepOne {
 	box: ICreateBox
@@ -11,6 +14,7 @@ interface IStepOne {
 }
 
 export const StepFourBox: React.FC<IStepOne> = ({ box, setBox }) => {
+	const dispatch = useDispatch<AppDispatch>()
 	const { register, handleSubmit, } = useForm({
 		defaultValues: {
 			checkboxWish: box.useWish,
@@ -19,13 +23,16 @@ export const StepFourBox: React.FC<IStepOne> = ({ box, setBox }) => {
 		}
 	})
 
-	const onSubmit = (data: { checkboxWish: boolean, checkboxNames: boolean, checkboxPhone: boolean }) => {
+	const onSubmit = async (data: { checkboxWish: boolean, checkboxNames: boolean, checkboxPhone: boolean }) => {
 		setBox((prevBox) => ({
 			...prevBox,
 			useWish: data.checkboxWish,
 			useNames: data.checkboxNames,
 			usePhone: data.checkboxPhone,
 		}));
+		const { step, ...newBox } = box;
+		const dataWithServer = await dispatch(createBox(newBox))
+		console.log(dataWithServer)
 	}
 
 	return (

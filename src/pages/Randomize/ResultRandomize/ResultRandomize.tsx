@@ -19,7 +19,8 @@ export const ResultRandomize = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get<IParties[]>(`http://localhost:5000/api/randomize/${params.id}`);
+                const response = await axios.get<IParties[]>(`http://localhost:5500/api/randomize/${params.id}`);
+								console.log(response)
                 setData(response.data);
                 setView(Array(response.data.length).fill(false))
             } catch (error) {

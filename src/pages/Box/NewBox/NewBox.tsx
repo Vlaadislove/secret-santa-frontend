@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import style from './NewBox.module.scss'
 import { StepOneBox } from './StepOne/StepOneBox'
 import { StepTwoBox } from './StepTwo/StepTwoBox'
 import { StepThreeBox } from './StepThree/StepThreeBox'
 import { StepFourBox } from './StepFour/StepFourBox'
+
 
 export interface ICreateBox {
 	useWish: boolean
@@ -27,15 +28,13 @@ export const NewBox = () => {
 		cashLimitCurrency: 'Рубль',
 		cashLimitMin: null,
 		nameBox: '',
+		logo: null,
 		picture: null,
 		useCashLimit: false,
 		useNames: true,
 		usePhone: false,
-		logo: null,
 		step: 1
 	})
-
-	console.log(box)
 
 
 	return (
